@@ -17,18 +17,23 @@ class Underscore < Formula
   def caveats
     <<~EOS
       First run copies the bundled .NET runtime to ~/.underscore/dotnet (5-10s, once).
-      Analysis data and SDK cache are stored in ~/.underscore/.
+      All underscore state lives under ~/.underscore/:
+        datomic/  per-project analysis databases
+        runs/     last 5 output JSONs per project (auto-pruned)
+        dotnet/   bundled runtime + lazy-installed SDKs
+        www/      webapp data per port
 
       Quick start:
         underscore analyze https://github.com/dotnet/aspnetcore
         underscore analyze ./my-local-repo
         underscore pr ./repo --base main
 
-      To clean up cached analysis data:
-        underscore clean --all
-
-      To wipe the .NET SDK cache (re-seeded on next run):
-        underscore clean --sdks
+      Disk management:
+        underscore clean                    List buckets with sizes
+        underscore clean --all              Delete all Datomic databases
+        underscore clean --runs [<project>] Wipe run artifacts (one project, or all)
+        underscore clean --sdks             Wipe the .NET runtime + SDK cache
+        underscore clean --everything       Nuke ~/.underscore/ (prompts y/N)
 
       To enable AI-powered journey narratives:
         export ANTHROPIC_API_KEY=<your-key>

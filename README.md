@@ -57,15 +57,34 @@ brew uninstall underscore
 rm -rf ~/.underscore  # optional: remove cached analysis data + SDK cache
 ```
 
-## Troubleshooting
+## Disk management
+
+Everything underscore writes lives under `~/.underscore/`:
+
+| Path | What |
+|---|---|
+| `datomic/<project>/` | Per-project Datomic database (full commit history) |
+| `runs/<project>/<timestamp>/` | Output JSONs from `analyze` / `pr` / `reexport` (last 5 kept, auto-pruned) |
+| `dotnet/` | Bundled .NET runtime + lazy-installed SDKs |
+| `www/<port>/` | Webapp data file per port |
 
 ```bash
+# List every bucket with disk usage:
+underscore clean
+
+# Delete a specific Datomic database (or all of them):
+underscore clean <project>
+underscore clean --all
+
+# Wipe run artifacts (one project, or every project):
+underscore clean --runs <project>
+underscore clean --runs
+
 # Wipe the .NET runtime + SDK cache (re-seeded on next run):
 underscore clean --sdks
 
-# List or delete cached analysis databases:
-underscore clean
-underscore clean --all
+# Nuke everything underscore manages (prompts y/N):
+underscore clean --everything
 ```
 
 ## Releasing a New Version
