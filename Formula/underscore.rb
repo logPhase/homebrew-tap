@@ -1,9 +1,9 @@
 class Underscore < Formula
   desc "Spatial visualization for C# and Java codebases"
   homepage "https://github.com/logPhase/underscore-cli"
-  url "https://github.com/logPhase/homebrew-tap/releases/download/v0.2.1/underscore-0.2.1-macos-arm64.tar.gz"
-  sha256 "b70c5da1bba9a0daade4fc21e96930b90d779fec99e783fce345335c2635ae61"
-  version "0.2.1"
+  url "https://github.com/logPhase/homebrew-tap/releases/download/v0.2.2/underscore-0.2.2-macos-arm64.tar.gz"
+  sha256 "29877c71bc9f34748013cf1944ca40457e2f162ce503ff7a998a30bd7fa8f946"
+  version "0.2.2"
   license :cannot_represent
 
   depends_on arch: :arm64
