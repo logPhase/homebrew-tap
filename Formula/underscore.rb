@@ -34,9 +34,6 @@ class Underscore < Formula
         underscore clean --runs [<project>] Wipe run artifacts (one project, or all)
         underscore clean --sdks             Wipe the .NET runtime + SDK cache
         underscore clean --everything       Nuke ~/.underscore/ (prompts y/N)
-
-      To enable AI-powered journey narratives:
-        export ANTHROPIC_API_KEY=<your-key>
     EOS
   end
 
