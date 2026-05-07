@@ -2,7 +2,7 @@ class Underscore < Formula
   desc "Spatial visualization for C# and Java codebases"
   homepage "https://github.com/logPhase/underscore-cli"
   url "https://github.com/logPhase/homebrew-tap/releases/download/v0.5.0/underscore-0.5.0-macos-arm64.tar.gz"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+  sha256 "b42d1993cab3e21e6464cf43e3082d867e173500ffa8bc065e88a83f80e36dde"
   version "0.5.0"
   license :cannot_represent
 
@@ -17,20 +17,13 @@ class Underscore < Formula
   def caveats
     <<~EOS
       First run copies the bundled .NET runtime to ~/.underscore/dotnet (5-10s, once).
-      All underscore state lives under ~/.underscore/:
-        datomic/  per-project analysis databases
-        runs/     last 5 output JSONs per project (auto-pruned)
-        dotnet/   bundled runtime + lazy-installed SDKs
-        www/      webapp data per port
 
       Quick start:
         underscore analyze https://github.com/dotnet/aspnetcore
-        underscore analyze ./my-local-repo
-        underscore pr ./repo --base main
+        underscore pr https://github.com/dotnet/eShop/pull/972
 
       Disk management:
         underscore clean                    List buckets with sizes
-        underscore clean --all              Delete all Datomic databases
         underscore clean --runs [<project>] Wipe run artifacts (one project, or all)
         underscore clean --sdks             Wipe the .NET runtime + SDK cache
         underscore clean --everything       Nuke ~/.underscore/ (prompts y/N)

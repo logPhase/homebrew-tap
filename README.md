@@ -8,85 +8,50 @@ Spatial visualization for C# and Java codebases.
 brew install logphase/tap/underscore
 ```
 
-No prerequisites. The tarball bundles its own JRE and .NET runtime — you do
-not need Java, .NET, or any other runtime installed on your machine.
-
-The first time you run `underscore`, it copies the bundled .NET runtime to
-`~/.underscore/dotnet` (5–10 seconds, one-time). After that, startup is
-instant.
-
-## Requirements
-
-- macOS on Apple Silicon (M1/M2/M3/M4)
-- ~1 GB of free disk: ~250 MB for the install, ~700 MB for the runtime cache
-  in `~/.underscore/`
+No prerequisites — the tarball bundles its own JRE and .NET runtime. The
+first run copies the bundled .NET runtime to `~/.underscore/dotnet/`
+(5–10 s, one-time).
 
 ## Usage
 
 ```bash
-underscore analyze https://github.com/org/repo
-underscore analyze ./local-repo
-underscore pr ./repo --base main
+underscore analyze https://github.com/dotnet/aspnetcore
+underscore pr https://github.com/dotnet/eShop/pull/972
 ```
 
-When analyzing a repo whose target framework isn't `net9.0` (the bundled
-SDK), underscore lazy-installs the matching .NET SDK on first use — same
-pattern as `rustup`/`nvm`/`pyenv`. Cached SDKs live under
-`~/.underscore/dotnet/sdk/`.
+`analyze` produces a spatial map of the codebase; `pr` overlays the changes
+from a pull request onto that map. See `underscore --help` for the full
+flag list.
 
-To enable AI-generated journey narratives:
+## Requirements
 
-```bash
-export ANTHROPIC_API_KEY=<your-key>
-```
+- macOS on Apple Silicon (M1/M2/M3/M4)
+- ~1 GB free disk: ~250 MB install + ~700 MB runtime cache under `~/.underscore/`
 
-## Update
+## Update / Uninstall
 
 ```bash
 brew upgrade logphase/tap/underscore
-```
-
-The runtime cache in `~/.underscore/` is preserved across upgrades. If the
-bundled .NET runtime version changes between releases, the launcher
-re-seeds the cache on next run.
-
-## Uninstall
-
-```bash
 brew uninstall underscore
-rm -rf ~/.underscore  # optional: remove cached analysis data + SDK cache
+rm -rf ~/.underscore   # optional: wipe cached run artifacts and SDK cache
 ```
+
+The `~/.underscore/` cache is preserved across upgrades. If the bundled
+.NET runtime changes between releases, the launcher re-seeds it on next
+run.
 
 ## Disk management
 
-Everything underscore writes lives under `~/.underscore/`:
-
-| Path | What |
-|---|---|
-| `datomic/<project>/` | Per-project Datomic database (full commit history) |
-| `runs/<project>/<timestamp>/` | Output JSONs from `analyze` / `pr` / `reexport` (last 5 kept, auto-pruned) |
-| `dotnet/` | Bundled .NET runtime + lazy-installed SDKs |
-| `www/<port>/` | Webapp data file per port |
+Everything underscore writes lives under `~/.underscore/`. To inspect or
+prune:
 
 ```bash
-# List every bucket with disk usage:
-underscore clean
-
-# Delete a specific Datomic database (or all of them):
-underscore clean <project>
-underscore clean --all
-
-# Wipe run artifacts (one project, or every project):
-underscore clean --runs <project>
-underscore clean --runs
-
-# Wipe the .NET runtime + SDK cache (re-seeded on next run):
-underscore clean --sdks
-
-# Nuke everything underscore manages (prompts y/N):
-underscore clean --everything
+underscore clean                       # list buckets with sizes
+underscore clean --runs [<project>]    # wipe run artifacts (one or all)
+underscore clean --sdks                # wipe .NET runtime + SDK cache
+underscore clean --everything          # nuke ~/.underscore/ (prompts y/N)
 ```
 
 ## Releasing a New Version
 
-See [RELEASE.md](./RELEASE.md) for the step-by-step release procedure.
+See [RELEASE.md](./RELEASE.md).
