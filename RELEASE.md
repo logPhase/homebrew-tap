@@ -31,7 +31,7 @@ git push origin vX.Y.Z
 The tag push triggers the `release-native` workflow at
 `.github/workflows/release-native.yml`. The workflow:
 1. Validates the tag matches `main.clj`'s version.
-2. Sets up .NET 9 SDK, JDK 21, Clojure, Node on a `macos-14` runner.
+2. Sets up .NET 10 SDK, JDK 21, Clojure, Node on a `macos-14` runner.
 3. Runs `scripts/build-native.sh` to produce
    `dist/underscore-X.Y.Z-macos-arm64.tar.gz`.
 4. Publishes the tarball as a workflow artifact (downloadable for 30 days).
